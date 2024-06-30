@@ -1,8 +1,9 @@
 import fs from 'fs'
+import { utilService } from './util.service.js'
 
 drawSquareToFile()
 function drawSquareToFile() {
-    const str = getSquare(getRandomIntInclusive(3, 20))
+    const str = getSquare(utilService.getRandomIntInclusive(3, 20))
     writeToFile(str)
         .then(() => {
             setTimeout(drawSquareToFile, 200)
@@ -21,6 +22,10 @@ function getSquare(size) {
 
 function writeToFile(str) {
     return new Promise((resolve, reject) => {
-
+        const file = 'data/pic.txt'
+        fs.writeFile(file, str, 'utf8', (err) => {
+            if (err) reject(err)
+            else resolve()
+        })
     })
 }
